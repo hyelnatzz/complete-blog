@@ -67,7 +67,7 @@ def admin_only(f):
     def wrapper(*args, **kwargs):
         if current_user.is_authenticated:
             if current_user.id == 1:
-                return f
+                return f(*args, **kwargs)
             else:
                 abort(403)
         abort(403)
@@ -164,6 +164,7 @@ def contact():
 @admin_only
 def add_new_post():
     form = CreatePostForm()
+    print("Entered++++++++++++++++++++++++++++++++++++++")
     if form.validate_on_submit():
         new_post = BlogPost(
             title=form.title.data,
